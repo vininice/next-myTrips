@@ -6,7 +6,7 @@ const Main = () => (
       src="/img/logo.svg"
       alt="Imagem de um átomo e React avançado escrito ao lado."
     />
-    <S.Title>React Avançado</S.Title>
+    <S.Title>NextJS na prática</S.Title>
     <S.Description>
       Typescript, ReactJS, NextJS e Styled Components
     </S.Description>
