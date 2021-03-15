@@ -9,7 +9,7 @@ const AboutTemplate = () => (
       <CloseOutline size={32} />
     </LinkWrapper>
 
-    <S.Heading>Componente nao altera</S.Heading>
+    <S.Heading>My Trips</S.Heading>
     <S.Body>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
