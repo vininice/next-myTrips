@@ -1,15 +1,16 @@
 import client from 'grapqhl/client'
-import { GET_PAGES } from 'grapqhl/querys'
+import { GET_PAGES, GET_PAGE_BY_SLUG } from 'grapqhl/querys'
+import { GetStaticProps } from 'next'
 import { useRouter } from 'next/dist/client/router'
-import PageTemplate from 'templates/Pages'
+import PageTemplate, { PageTemplateProps } from 'templates/Pages'
 
-export default function AboutPage() {
+export default function Page({ heading, body }: PageTemplateProps) {
   const router = useRouter()
 
   // retorna um loading, qq coisa enquanto ta sendo criado
   if (router.isFallback) return null
 
-  return <PageTemplate />
+  return <PageTemplate heading={heading} body={body} />
 }
 
 //gerando urls da pagina
@@ -20,21 +21,23 @@ export async function getStaticPaths() {
     params: { slug }
   }))
 
-  return {
-    paths,
-    fallback: true
-  }
+  return { paths, fallback: true }
 }
 
-// export const getStaticProps = async () => {
-//  c
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { page } = await client.request(GET_PAGE_BY_SLUG, {
+    slug: `${params?.slug}`
+  })
 
-//   console.log(pages)
+  if (!page) return { notFound: true }
 
-//   return {
-//     props: {}
-//   }
-// }
+  return {
+    props: {
+      heading: page.heading,
+      body: page.body.html
+    }
+  }
+}
 
 //getStaticPaths -> serve para gerar as urls em build time /about/trips/londrina
 //getStaticProps -> buscar dados das página em build time (props) - static
